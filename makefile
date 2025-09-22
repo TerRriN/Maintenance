@@ -28,13 +28,13 @@ common.o: common.c common.h
 
 
 run9:
-	./sudoku input/txt9/9x9board101.txt 9 4
+	./sudoku input/txt9/invalid.txt 9 4
 
 run16:
 	./sudoku input/txt16/16x16board7.txt 16 10
 
 run25:
-	./sudoku input/txt25/6x25.txt 25 4
+	./sudoku input/txt25/invalid.txt 25 4
 
 run36:
 	./sudoku input/36x36.txt 36 4
@@ -51,8 +51,11 @@ time25:
 gdb:
 	gdb ./sudoku input/txt/1x25.txt 25 4
 	
-run_test: test
-	valgrind --leak-check=full ./test
+
+test_logical: tests/logical_solver_tests.c logic/logical_solver.c logic/common.c logic/utils.c
+	gcc -Wall -pedantic -Ilogic tests/logical_solver_tests.c logic/logical_solver.c logic/common.c logic/utils.c -o testLogical -lcunit
+	./testLogical
+
 
 clean:
 	rm -f sudoku test *.o create_board function_tester

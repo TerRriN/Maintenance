@@ -18,7 +18,7 @@
 */
 
 // Turn on/off board print
-#define DEMO 1
+#define DEMO 0
 
 /**
  * @brief Brute force algorithm that tries to solve the sudoku board
