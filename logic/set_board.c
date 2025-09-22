@@ -36,10 +36,12 @@ void set_numbers_txt(char board[N][N], char *file_name){
 
     while((c = fgetc(file)) != EOF){
         if(c == ' '){
+            printf("%c ", val + '0');
             board[i][j] = val + '0';
             val = 0;
             j++;
         }else if(c == '\n'){
+            printf("\n");
             board[i][j] = val + '0';
             val = 0;
             i++;

@@ -1,61 +1,60 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -g
-OFLAGS = -O3 -march=native -fopenmp
-LDFLAGS= -lm
+# Compiler and flags
+CC      = gcc
+CFLAGS  = -Wall -Wextra -g -MMD -MP
+OFLAGS  = -O3 -march=native -fopenmp
+LDFLAGS = -lm
 
-all: main
+# Layout
+SRC_DIR := logic
+OBJDIR  := build
+INC     := -I$(SRC_DIR)
 
-main: common.o utils.o logical_solver.o main.c set_board.o
-	$(CC) $(CFLAGS) $(OFLAGS) -o sudoku main.c common.o utils.o logical_solver.o set_board.o $(LDFLAGS)
+# Sources from logic/
+SRC := $(SRC_DIR)/common.c \
+       $(SRC_DIR)/utils.c \
+       $(SRC_DIR)/logical_solver.c \
+       $(SRC_DIR)/set_board.c
 
-create_board: create_board.c common.o utils.o logical_solver.o set_board.o
-	$(CC) $(CFLAGS) $(OFLAGS) -o create_board create_board.c common.o utils.o logical_solver.o set_board.o $(LDFLAGS)
+# Objects & deps in build/
+OBJ  := $(patsubst $(SRC_DIR)/%.c,$(OBJDIR)/%.o,$(SRC))
+DEPS := $(OBJ:.o=.d)
 
-function_tester: function_tester.c common.o utils.o logical_solver.o set_board.o
-	$(CC) $(CFLAGS) $(OFLAGS) -o function_tester function_tester.c common.o utils.o logical_solver.o set_board.o $(LDFLAGS)
+# Binaries
+BIN_SUDOKU := sudoku
+BIN_CREATE := create_board
+BIN_TEST   := logical_solver_tests
 
-utils.o: utils.c utils.h
-	$(CC) $(CFLAGS) $(OFLAGS) -c utils.c
+.DEFAULT_GOAL := all
+.PHONY: all clean test
 
-logical_solver.o: logical_solver.c logical_solver.h
-	$(CC) $(CFLAGS) $(OFLAGS) -c logical_solver.c
+all: $(BIN_SUDOKU)
 
-set_board.o: set_board.c set_board.h
-	$(CC) $(CFLAGS) $(OFLAGS) -c set_board.c
+# Main app (main.c at repo root)
+$(BIN_SUDOKU): main.c $(OBJ)
+	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o $@ $^ $(LDFLAGS)
 
-common.o: common.c common.h
-	$(CC) $(CFLAGS) $(OFLAGS) -c common.c
+# Standalone board creator
+$(BIN_CREATE): $(SRC_DIR)/create_board.c $(OBJ)
+	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o $@ $^ $(LDFLAGS)
 
+# Pattern rule: build/%.o from logic/%.c
+$(OBJDIR)/%.o: $(SRC_DIR)/%.c | $(OBJDIR)
+	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -c $< -o $@
 
-run9:
-	./sudoku input/txt9/invalid.txt 9 4
+# Ensure build/ exists
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
-run16:
-	./sudoku input/txt16/16x16board7.txt 16 10
-
-run25:
-	./sudoku input/txt25/invalid.txt 25 4
-
-run36:
-	./sudoku input/36x36.txt 36 4
-
-time9:
-	./run-sudokux9.sh
-
-time16:
-	./run-sudokux16.sh
-
-time25:
-	./run-sudokux25.sh
-
-gdb:
-	gdb ./sudoku input/txt/1x25.txt 25 4
-	
-
-test_logical: tests/logical_solver_tests.c logic/logical_solver.c logic/common.c logic/utils.c
-	gcc -Wall -pedantic -Ilogic tests/logical_solver_tests.c logic/logical_solver.c logic/common.c logic/utils.c -o testLogical -lcunit
-	./testLogical
-
+# Include auto-generated deps
+-include $(DEPS)
 
 clean:
-	rm -f sudoku test *.o create_board function_tester
+	$(RM) -r $(OBJDIR) $(BIN_SUDOKU) $(BIN_CREATE) tests/$(BIN_TEST) testLogical
+
+
+run: $(BIN_SUDOKU)
+	./$(BIN_SUDOKU) input/temp.txt 25 4
+
+logic_tests: tests/logical_solver_tests.c $(OBJ)
+	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o tests/$(BIN_TEST) $^ $(LDFLAGS) -lcunit
+	./tests/$(BIN_TEST)	
