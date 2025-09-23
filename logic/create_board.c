@@ -22,7 +22,7 @@ typedef struct cord{
     int y;
 } cord_t;
 
-void insert_input(char original_board[N][N], const char *board_str){
+void insert_input(int N, char original_board[N][N], const char *board_str){
     char *token;
     char *str = strdup(board_str); // Duplicate input to avoid modifying original
     int value, i = 0, j = 0;
@@ -46,7 +46,7 @@ void insert_input(char original_board[N][N], const char *board_str){
  * 
  * @param cord Pointer to coordinates
  */
-void random_pair(cord_t *cord){
+void random_pair(int N, cord_t *cord){
     cord->x = rand() % (N);
     cord->y = rand() % (N);
 }
@@ -57,7 +57,7 @@ void random_pair(cord_t *cord){
  * @param board Sudoku board
  * @param cord X and Y coordinates
  */
-void remove_cell(char board[N][N], cord_t *cord){
+void remove_cell(int N, char board[N][N], cord_t *cord){
     board[cord->y][cord->x] = '0';
 }
 
@@ -68,7 +68,7 @@ void remove_cell(char board[N][N], cord_t *cord){
  * @param solved_board Solved board
  * @return True if boards remain equal, otherwise false
  */
-bool boards_remains_equal(char original_board[N][N], char solved_board[N][N]){
+bool boards_remains_equal(int N, char original_board[N][N], char solved_board[N][N]){
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             if(original_board[i][j] != solved_board[i][j]){
@@ -84,7 +84,7 @@ bool boards_remains_equal(char original_board[N][N], char solved_board[N][N]){
  * 
  * @param board Sudoku board
  */
-void empty_board(char board[N][N]){
+void empty_board(int N, char board[N][N]){
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             board[i][j] = '0';
@@ -99,7 +99,7 @@ void empty_board(char board[N][N]){
  * @param board Sudoku board
  * @param file_count Number thats added to the filename
  */
-void create_file(char board[N][N], int file_count){
+void create_file(int N, char board[N][N], int file_count){
     FILE *f;
     char filename[256];
     sprintf(filename, "input/txt%d/%dx%dboard%d.txt", N, N, N, file_count);
@@ -122,7 +122,7 @@ void create_file(char board[N][N], int file_count){
 /**
  * @brief Modified version of Solve. See main.c for original Solve function
  */
-bool Solve(char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *solutionFound, int depth, char poss[N][N][N]){
+bool Solve(int N, char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *solutionFound, int depth, char poss[N][N][N]){
     if(N_unAssign == 0){
         return true;
     }
@@ -160,7 +160,7 @@ bool Solve(char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *s
 /**
  * @brief Modified version of main and Solve. See main.c for original main and Solve functions
  */
-bool solve_board(char board[N][N]){
+bool solve_board(int N, char board[N][N]){
     bool solution = false;
     char possibilities[N][N][N];
     set_possibilities(board, possibilities);            // Set possibilities
@@ -192,7 +192,7 @@ bool solve_board(char board[N][N]){
  * @param original_board Original Sudoku board
  * @param file_count Number thats added to the filename
  */
-void create_board(char original_board[N][N], int file_count){
+void create_board(int N, char original_board[N][N], int file_count){
     cord_t *cord = malloc(sizeof(cord_t));
     char new_board[N][N];
     copy_board(original_board, new_board);

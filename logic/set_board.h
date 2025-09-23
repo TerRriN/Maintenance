@@ -8,7 +8,7 @@
  * @param board Sudoku board
  * @param file_name File name
 */
-void set_numbers(char board[N][N], char *file_name);
+void set_numbers(int N, char board[N][N], char *file_name);
 
 /**
  * @brief Set numbers from .txt file to board
@@ -17,7 +17,7 @@ void set_numbers(char board[N][N], char *file_name);
  * @param board Sudoku board
  * @param file_name File name
 */
-void set_numbers_txt(char board[N][N], char *file_name);
+void set_numbers_txt(int N, char board[N][N], char *file_name);
 
 /**
  * @brief Set numbers from file to board
@@ -25,4 +25,4 @@ void set_numbers_txt(char board[N][N], char *file_name);
  * @param board Sudoku board
  * @param file_name File name
 */
-void set_numbers(char board[N][N], char *file_name);
+void set_numbers(int N, char board[N][N], char *file_name);

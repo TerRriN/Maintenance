@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-extern int N;
+//extern int N;
 extern int sqrt_N;
 
 typedef struct unAssignInd{
@@ -39,7 +39,7 @@ double get_wall_time();
  * 
  * @param board Sudoku board
 */
-void print_board(char board[N][N]);
+void print_board(int N, char board[N][N]);
 
 /**
  * @brief Print all possibilities
@@ -47,7 +47,7 @@ void print_board(char board[N][N]);
  * @param poss Array of possibilities
  * @param N_elements Number of elements in the possibilities array
 */
-void print_possibilities(char poss[N][N][N]);
+void print_possibilities(int N, char poss[N][N][N]);
 
 /**
  * @brief Print possibilities for a specific cell
@@ -56,18 +56,18 @@ void print_possibilities(char poss[N][N][N]);
  * @param y Row
  * @param x Column
 */
-void print_precise_possibilities(char poss[N][N][N], int y, int x);
+void print_precise_possibilities(int N, char poss[N][N][N], int y, int x);
 
 /**
  * @brief Display standard 9x9 sudoku board in a more readable format
  * 
  * @param board Sudoku board
  */
-void sud_display_board_std(char board[N][N]);
+void sud_display_board_std(int N, char board[N][N]);
 
 /**
  * @brief Display giant sudoku board in a more readable format
  * 
  * @param board Sudoku board
  */
-void sud_display_board_giant(char board[N][N]);
+void sud_display_board_giant(int N, char board[N][N]);

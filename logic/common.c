@@ -9,7 +9,7 @@ double get_wall_time() {
     return (double)time.tv_sec + (double)time.tv_nsec / 1e9;
 }
 
-void print_board(char board[N][N]){
+void print_board(int N, char board[N][N]){
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             printf(" %d ", board[i][j] - '0');
@@ -19,7 +19,7 @@ void print_board(char board[N][N]){
     printf("\n");
 }
 
-void print_possibilities(char poss[N][N][N]){
+void print_possibilities(int N, char poss[N][N][N]){
     int x = 0;
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
@@ -34,7 +34,7 @@ void print_possibilities(char poss[N][N][N]){
 }
 
 
-void print_precise_possibilities(char poss[N][N][N], int y, int x){
+void print_precise_possibilities(int N, char poss[N][N][N], int y, int x){
     int x_val = 0;
     printf("x: %d, y: %d: [ ", x, y);
     for(int k = 0; k < N; k++){
@@ -52,7 +52,7 @@ void sud_display_line(int line_length){
     printf("\n");
 }
 
-void sud_display_board_std(char board[N][N]){
+void sud_display_board_std(int N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;
@@ -85,7 +85,7 @@ void sud_display_board_std(char board[N][N]){
     sud_display_line(line_length);
 }
 
-void sud_display_board_giant(char board[N][N]){
+void sud_display_board_giant(int N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;

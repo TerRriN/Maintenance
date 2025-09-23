@@ -8,7 +8,7 @@
  * @param y Row
  * @return True if there are duplicates, otherwise false
 */
-bool DuplicateNumbersinRow(char board[N][N], int y, int x);
+bool DuplicateNumbersinRow(int N, char board[N][N], int y, int x);
 
 /**
  * @brief Check if there are duplicate numbers in a column
@@ -17,7 +17,7 @@ bool DuplicateNumbersinRow(char board[N][N], int y, int x);
  * @param x Column
  * @return True if there are duplicates, otherwise false
 */
-bool DuplicateNumbersinCol(char board[N][N], int y, int x);
+bool DuplicateNumbersinCol(int N, char board[N][N], int y, int x);
 
 /**
  * @brief Check if there are duplicate numbers in a box
@@ -27,7 +27,7 @@ bool DuplicateNumbersinCol(char board[N][N], int y, int x);
  * @param x Column
  * @return True if there are duplicates, otherwise false
 */
-bool DuplicateNumbersinBox(char board[N][N], int y, int x);
+bool DuplicateNumbersinBox(int N, int sqrt_N, char board[N][N], int y, int x);
 
 /**
  * @brief Validate board
@@ -37,7 +37,7 @@ bool DuplicateNumbersinBox(char board[N][N], int y, int x);
  * @param x Column
  * @return True if board is valid, otherwise false
 */
-bool ValidateBoard(char board[N][N], int y, int x);
+bool ValidateBoard(int N, int sqrt_N, char board[N][N], int y, int x);
 
 /**
  * @brief Check if the entire board is valid
@@ -45,7 +45,7 @@ bool ValidateBoard(char board[N][N], int y, int x);
  * @param board Sudoku board
  * @return True if board is valid, otherwise false
 */
-bool check_entire_board(char board[N][N]);
+bool check_entire_board(int N, char board[N][N]);
 
 /**
  * @brief Compare to hardcoded solution
@@ -53,4 +53,4 @@ bool check_entire_board(char board[N][N]);
  * @param board Sudoku board
  * @return True if board is equal to hardcoded solution, otherwise false
  */
-bool compare_to_solution(char board[N][N]);
+bool compare_to_solution(int N, char board[N][N]);

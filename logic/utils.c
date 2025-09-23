@@ -1,6 +1,6 @@
 #include "utils.h"
 
-bool DuplicateNumbersinRow(char board[N][N], int y, int x){
+bool DuplicateNumbersinRow(int N, char board[N][N], int y, int x){
     char comparator = board[y][x];
     for(int i = 0; i < N; i++){
         if(board[y][i] == comparator && i != x){
@@ -10,7 +10,7 @@ bool DuplicateNumbersinRow(char board[N][N], int y, int x){
     return false;
 }
 
-bool DuplicateNumbersinCol(char board[N][N], int y, int x){
+bool DuplicateNumbersinCol(int N, char board[N][N], int y, int x){
     char comparator = board[y][x];
     for(int i = 0; i < N; i++){
         if(board[i][x] == comparator && i != y){
@@ -20,7 +20,7 @@ bool DuplicateNumbersinCol(char board[N][N], int y, int x){
     return false;
 }
 
-bool DuplicateNumbersinBox(char board[N][N], int y, int x){
+bool DuplicateNumbersinBox(int N, int sqrt_N, char board[N][N], int y, int x){
     int boxSize = sqrt_N;
     int start_y = y - y % boxSize;
     int start_x = x - x % boxSize;
@@ -40,14 +40,14 @@ bool DuplicateNumbersinBox(char board[N][N], int y, int x){
     return false;
 }
 
-bool ValidateBoard(char board[N][N], int y, int x){
-    if(DuplicateNumbersinBox(board, y, x))      return false; //BOX
-    if(DuplicateNumbersinCol(board, y, x))      return false; //COL
-    if(DuplicateNumbersinRow(board, y, x))      return false; //ROW
+bool ValidateBoard(int N, int sqrt_N, char board[N][N], int y, int x){
+    if(DuplicateNumbersinBox(N, sqrt_N, board, y, x))      return false; //BOX
+    if(DuplicateNumbersinCol(N, board, y, x))      return false; //COL
+    if(DuplicateNumbersinRow(N, board, y, x))      return false; //ROW
     return true;
 }
 
-bool check_entire_board(char board[N][N]){
+bool check_entire_board(int N, char board[N][N]){
     bool x_flag = true;
     bool y_flag = true;
     for(int i = 0; i < N; i++){
@@ -86,7 +86,7 @@ bool check_entire_board(char board[N][N]){
 1 2 7 6 3 5 9 8 4 
 6 9 3 8 7 4 5 1 2
 */
-bool compare_to_solution(char board[N][N]){
+bool compare_to_solution(int N, char board[N][N]){
     char *solution = "951782436834196275276543198748351629369427851512968743485219367127635984693874512";
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){

@@ -1,6 +1,6 @@
 #include "logical_solver.h"
 
-int count_unassigned(char board[N][N]){
+int count_unassigned(int N, char board[N][N]){
     int N_unAssign = 0;
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
@@ -12,7 +12,7 @@ int count_unassigned(char board[N][N]){
     return N_unAssign;
 }
 
-unAssigned_t **set_unassigned(char board[N][N], int N_unAssign){
+unAssigned_t **set_unassigned(int N, char board[N][N], int N_unAssign){
     int k = 0;
     unAssigned_t **unAssignInd = calloc(N_unAssign, sizeof(unAssigned_t*));
     for(int i = 0; i < N; i++){
@@ -36,14 +36,14 @@ void destroy_unassigned(unAssigned_t **unAssignInd, int N_unAssign){
     free(unAssignInd);
 }
 
-void set_possibilities(char board[N][N], char possibilities[N][N][N]){
+void set_possibilities(int N, int sqrt_N, char board[N][N], char possibilities[N][N][N]){
     int cell_count = 0;
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             if(board[i][j] == '0'){
                 for(int val = 1; val < (N+1); val++){
                     board[i][j] = val + '0';
-                    if(ValidateBoard(board, i, j)){
+                    if(ValidateBoard(N, sqrt_N, board, i, j)){
                         possibilities[i][j][val-1] = val + '0';
                     }else{
                         possibilities[i][j][val-1] = '0';
@@ -61,13 +61,13 @@ void set_possibilities(char board[N][N], char possibilities[N][N][N]){
 }
 
 
-void new_update_possibilities(char board[N][N], char poss[N][N][N]){
+void update_possibilities(int N, int sqrt_N, char board[N][N], char poss[N][N][N]){
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             if(board[i][j] == '0'){
                 for(int val = 1; val < (N+1); val++){
                     board[i][j] = val + '0';
-                    if(ValidateBoard(board, i, j)){
+                    if(ValidateBoard(N, sqrt_N, board, i, j)){
                         poss[i][j][val-1] = val + '0';
                     }else{
                         poss[i][j][val-1] = '0';
@@ -83,7 +83,7 @@ void new_update_possibilities(char board[N][N], char poss[N][N][N]){
     }
 }
 
-int the_lucky_one(char board[N][N], char poss[N][N][N]){
+int the_lucky_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]){
     int lucky = 0;
     int poss_count = 0;
     int poss_val = 0;
@@ -103,7 +103,7 @@ int the_lucky_one(char board[N][N], char poss[N][N][N]){
         }
     }
     if(lucky > 0){
-        new_update_possibilities(board, poss);
+        update_possibilities(N, sqrt_N, board, poss);
     }
     return lucky;
 }
@@ -111,7 +111,7 @@ int the_lucky_one(char board[N][N], char poss[N][N][N]){
 /**
  * @brief Helper function for the_easy_one
 */
-int the_easy_one_helper(char board[N][N], char poss[N][N][N], int boxSize, int start_y, int start_x, int val){
+int the_easy_one_helper(int N, char board[N][N], char poss[N][N][N], int boxSize, int start_y, int start_x, int val){
     int count = 0;
     int new_x, new_y;
     char new_val;
@@ -135,7 +135,7 @@ int the_easy_one_helper(char board[N][N], char poss[N][N][N], int boxSize, int s
 }
 
 
-int the_easy_one(char board[N][N], char poss[N][N][N]){
+int the_easy_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]){
     int count = 0;
     int boxSize = sqrt_N;
     bool changed = true;
@@ -147,14 +147,14 @@ int the_easy_one(char board[N][N], char poss[N][N][N]){
 
             int local_changed = 0;
             for(int val = 1; val < (N+1); val++){
-                local_changed = the_easy_one_helper(board, poss, boxSize, start_y, start_x, val);
+                local_changed = the_easy_one_helper(N, board, poss, boxSize, start_y, start_x, val);
                 if(local_changed){
                     count++;
                     changed = true;
                 }
             }
         }
-        new_update_possibilities(board, poss);
+        update_possibilities(N, sqrt_N, board, poss);
     }
     return count;
 }
@@ -162,7 +162,7 @@ int the_easy_one(char board[N][N], char poss[N][N][N]){
 /**
  * @brief Helper function for pairs
 */
-void pairs_helper(char poss[N][N][N], int boxSize, int start_y, int start_x, int val, pair_t *pair){
+void pairs_helper(int N, char poss[N][N][N], int boxSize, int start_y, int start_x, int val, pair_t *pair){
     int count = 0;
     int new_x[2];
     int new_y[2];
@@ -189,7 +189,7 @@ void pairs_helper(char poss[N][N][N], int boxSize, int start_y, int start_x, int
     }
 }
 
-int pairs(char poss[N][N][N]){
+int pairs(int N, char poss[N][N][N]){
     int count = 0;
     int boxSize = sqrt_N;
     pair_t **pairs = calloc(N, sizeof(pair_t*));
@@ -201,7 +201,7 @@ int pairs(char poss[N][N][N]){
         int start_x = (box % boxSize) * boxSize;
         int start_y = (box / boxSize) * boxSize;
         for(int val = 1; val < (N+1); val++){
-            pairs_helper(poss, boxSize, start_y, start_x, val, pairs[val-1]);
+            pairs_helper(N, poss, boxSize, start_y, start_x, val, pairs[val-1]);
         }
 
         for(int i = 0; i < N; i++){
@@ -242,7 +242,7 @@ int pairs(char poss[N][N][N]){
  * @param val Value to check
  * @param line Line struct
 */
-void get_line(char poss[N][N][N], int boxSize, int start_y, int start_x, int val, line_t *line){
+void get_line(int N, char poss[N][N][N], int boxSize, int start_y, int start_x, int val, line_t *line){
     int count = 0;
     int first_x = 0;
     int first_y = 0;
@@ -295,7 +295,7 @@ void get_line(char poss[N][N][N], int boxSize, int start_y, int start_x, int val
  * @param start_x Start x coordinate of the box
  * @param start_y Start y coordinate of the box
 */
-void eliminate_line(char poss[N][N][N], line_t *line, int start_x, int start_y){
+void eliminate_line(int N, int sqrt_N, char poss[N][N][N], line_t *line, int start_x, int start_y){
     // dir 0 = row, dir 1 = col
     if(line->dir == 0){
         for(int i = 0; i < N; i++){
@@ -310,7 +310,7 @@ void eliminate_line(char poss[N][N][N], line_t *line, int start_x, int start_y){
     }
 }
 
-int lines(char poss[N][N][N]){
+int lines(int N, int sqrt_N, char poss[N][N][N]){
     int count = 0;
     int boxSize = sqrt_N;
     line_t *line = calloc(1, sizeof(line_t));
@@ -320,9 +320,9 @@ int lines(char poss[N][N][N]){
         int start_y = (box / boxSize) * boxSize;
         for(int val = 1; val < (N+1); val++){
             line->val = 0; // Reset line
-            get_line(poss, boxSize, start_y, start_x, val, line);
+            get_line(N, poss, boxSize, start_y, start_x, val, line);
             if(line->val != 0){
-                eliminate_line(poss, line, start_x, start_y);
+                eliminate_line(N, sqrt_N, poss, line, start_x, start_y);
                 count++;
             }
         }
@@ -331,7 +331,7 @@ int lines(char poss[N][N][N]){
     return count;
 }
 
-void copy_board(char OG_board[N][N], char current_board[N][N]){
+void copy_board(int N, char OG_board[N][N], char current_board[N][N]){
     for(int j = 0; j < N; j++){
         for(int k = 0; k < N; k++){
             current_board[j][k] = OG_board[j][k];
@@ -339,14 +339,14 @@ void copy_board(char OG_board[N][N], char current_board[N][N]){
     }
 }
 
-void eliminate_possibilities(char board[N][N], char possibilities[N][N][N]){
+void eliminate_possibilities(int N, int sqrt_N, char board[N][N], char possibilities[N][N][N]){
     int lucky = 1, easy = 1, pair = 1, previous_pair = 0, line = 1, previous_line = 0;
     while(lucky != 0 || easy != 0 || line != previous_line || pair != previous_pair){ // Loop until no changes
-        lucky = the_lucky_one(board, possibilities);    // If cell only has one possibility, set it
-        easy = the_easy_one(board, possibilities);      // If only one cell can set a value in a box, set it
+        lucky = the_lucky_one(N, sqrt_N, board, possibilities);    // If cell only has one possibility, set it
+        easy = the_easy_one(N, sqrt_N, board, possibilities);      // If only one cell can set a value in a box, set it
         previous_pair = pair;
-        pair = pairs(possibilities);                    // If only two cells in a box can set the same two values, eliminate other possibilities in the cells
+        pair = pairs(N, possibilities);                    // If only two cells in a box can set the same two values, eliminate other possibilities in the cells
         previous_line = line;
-        line = lines(possibilities);                    // If a line is formed by a value in a box, eliminate value in other cells in the line
+        line = lines(N, sqrt_N, possibilities);                    // If a line is formed by a value in a box, eliminate value in other cells in the line
     }
 }

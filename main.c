@@ -18,7 +18,7 @@
 */
 
 // Turn on/off board print
-#define DEMO 0
+#define DEMO 1
 
 /**
  * @brief Brute force algorithm that tries to solve the sudoku board
@@ -39,7 +39,7 @@
  * and geeksforgeeks:
  * https://www.geeksforgeeks.org/sudoku-backtracking-7/
 */
-bool Solve(char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *solutionFound, int depth, char poss[N][N][N]){
+bool Solve(int N, char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *solutionFound, int depth, char poss[N][N][N]){
     if(N_unAssign == 0){
         return true;
     }
@@ -54,20 +54,20 @@ bool Solve(char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *s
             if(poss[y][x][i] == '0') continue;
 
             board[y][x] = (i+1) + '0'; // Set guess
-            if(ValidateBoard(board, y, x)){
+            if(ValidateBoard(N, board, y, x)){
                 bool local_solution = false;
                 #pragma omp task firstprivate(board, N_unAssign) final(depth > 1)
                 {
                     char board_copy[N][N];
-                    copy_board(board, board_copy);
+                    copy_board(N, board, board_copy);
                     board_copy[y][x] = (i+1) + '0';
-                    local_solution = Solve(board_copy, unAssignInd, tmp, solutionFound, depth+1, poss);
+                    local_solution = Solve(N, board_copy, unAssignInd, tmp, solutionFound, depth+1, poss);
                     if(local_solution){
-                        if(check_entire_board(board_copy)){
+                        if(check_entire_board(N, board_copy)){
                             printf("SOLUTION\n");
                         }
                         #if DEMO == 1
-                        print_board(board_copy);
+                        print_board(N, board_copy);
                         #endif
                         *solutionFound = true; // Workaround to stop all threads
                     }
@@ -93,45 +93,45 @@ int main(int argc, char *argv[]){
         return 1;
     }
     int N_threads = atoi(argv[3]);
-    N = atoi(argv[2]);
+    int N = atoi(argv[2]);
     sqrt_N = sqrt(N);
     char board[N][N];
-    set_numbers(board, argv[1]);                    // Set numbers from file
+    set_numbers(N, board, argv[1]);                    // Set numbers from file
 
     printf("--------------------\n");
     printf("Running %s\n", argv[1]);
     
     #if DEMO == 1
-    printf("NOF Unassigned cells before elimination: %d\n", count_unassigned(board));
-    print_board(board);
+    printf("NOF Unassigned cells before elimination: %d\n", count_unassigned(N, board));
+    print_board(N, board);
     #endif
     bool solution = false;
     double start = get_wall_time();                     // Start timer
     char possibilities[N][N][N];
-    set_possibilities(board, possibilities);            // Set possibilities
-    eliminate_possibilities(board, possibilities);      // Eliminate possibilities and set logical values
-    int N_unAssign = count_unassigned(board);
+    set_possibilities(N, board, possibilities);            // Set possibilities
+    eliminate_possibilities(N, board, possibilities);      // Eliminate possibilities and set logical values
+    int N_unAssign = count_unassigned(N, board);
 
     #if DEMO == 1
     printf("NOF Unassigned cells after elimination: %d\n", N_unAssign);
     #endif
     if(N_unAssign == 0){                                // If no unassigned cells, print solution. Else brute force
-        if(check_entire_board(board)){
+        if(check_entire_board(N, board)){
                 printf("EARLY SOLUTION\n");
         }else{
             printf("NO SOLUTION\n");
         }
         #if DEMO == 1
-        print_board(board);
+        print_board(N, board);
         #endif
     }else{
-        unAssigned_t **unAssignInd = set_unassigned(board, N_unAssign); // Set unassigned cells (x, y)
+        unAssigned_t **unAssignInd = set_unassigned(N, board, N_unAssign); // Set unassigned cells (x, y)
         omp_set_num_threads(N_threads);
         #pragma omp parallel
         {
             #pragma omp master
             {
-                Solve(board, unAssignInd, N_unAssign, &solution, 0, possibilities);
+                Solve(N, board, unAssignInd, N_unAssign, &solution, 0, possibilities);
                 if(!solution){
                     printf("NO SOLUTION\n");
                 }

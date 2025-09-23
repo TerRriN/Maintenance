@@ -14,7 +14,7 @@
  * @param board Sudoku board
  * @return Number of unassigned cells
 */
-int count_unassigned(char board[N][N]);
+int count_unassigned(int N, char board[N][N]);
 
 /**
  * @brief Set unassigned cells
@@ -24,7 +24,7 @@ int count_unassigned(char board[N][N]);
  * @param N_unAssign Number of unassigned cells
  * @return Array of unassigned cells
 */
-unAssigned_t **set_unassigned(char board[N][N], int N_unAssign);
+unAssigned_t **set_unassigned(int N, char board[N][N], int N_unAssign);
 
 /**
  * @brief Free memory
@@ -43,7 +43,7 @@ void destroy_unassigned(unAssigned_t **unAssignInd, int N_unAssign);
  * @param possibilities 3D array of possibilities for each cell
  * EX: possibilities[y][x] = [ 1 0 0 4 5 6 7 0 9 ]
 */
-void set_possibilities(char board[N][N], char possibilities[N][N][N]);
+void set_possibilities(int N, int sqrt_N, char board[N][N], char possibilities[N][N][N]);
 
 /**
  * @brief Update possibilities
@@ -54,7 +54,7 @@ void set_possibilities(char board[N][N], char possibilities[N][N][N]);
  * @param board Sudoku board
  * @param poss Array of possibilities
 */
-void new_update_possibilities(char board[N][N], char poss[N][N][N]);
+void update_possibilities(int N, int sqrt_N, char board[N][N], char poss[N][N][N]);
 //=====================================================================================
 /*****************************************************
  * The logical solver functions uses the possibilities
@@ -69,7 +69,7 @@ void new_update_possibilities(char board[N][N], char poss[N][N][N]);
  * @return Number of cells set
  * EX: possibilities[0] = [1, 0, 0, 0, 0, 0, 0, 0, 0] 
 */
-int the_lucky_one(char board[N][N], char poss[N][N][N]);
+int the_lucky_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]);
 
 /**
  * @brief The easy one
@@ -79,7 +79,7 @@ int the_lucky_one(char board[N][N], char poss[N][N][N]);
  * @param poss Array of possibilities
  * @return Number of cells set
 */
-int the_easy_one(char board[N][N], char poss[N][N][N]);
+int the_easy_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]);
 
 /**
  * @brief Search for possible pairs
@@ -94,7 +94,7 @@ int the_easy_one(char board[N][N], char poss[N][N][N]);
  *     possibilities[4][5] = [ 6 7 ]
  *     possibilities[5][4] = [ 6 7 ]
 */
-int pairs(char poss[N][N][N]);
+int pairs(int N, char poss[N][N][N]);
 
 /**
  * @brief Search for lines
@@ -103,7 +103,7 @@ int pairs(char poss[N][N][N]);
  * @param poss Array of possibilities
  * @return Number of lines found
 */
-int lines(char poss[N][N][N]);
+int lines(int N, int sqrt_N, char poss[N][N][N]);
 
 /**
  * @brief Copy board
@@ -111,7 +111,7 @@ int lines(char poss[N][N][N]);
  * @param OG_board Original board
  * @param current_board Current board
 */
-void copy_board(char OG_board[N][N], char current_board[N][N]);
+void copy_board(int N, char OG_board[N][N], char current_board[N][N]);
 
 /**
  * @brief Eliminate possibilities
@@ -119,4 +119,4 @@ void copy_board(char OG_board[N][N], char current_board[N][N]);
  * @param board Sudoku board
  * @param possibilities Array of possibilities
 */
-void eliminate_possibilities(char board[N][N], char possibilities[N][N][N]);
+void eliminate_possibilities(int N, int sqrt_N, char board[N][N], char possibilities[N][N][N]);
