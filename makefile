@@ -22,7 +22,7 @@ DEPS := $(OBJ:.o=.d)
 # Binaries
 BIN_SUDOKU := sudoku
 BIN_CREATE := create_board
-BIN_TEST   := logical_solver_tests
+BIN_TEST   := unit_tests
 
 .DEFAULT_GOAL := all
 .PHONY: all clean test
@@ -55,6 +55,6 @@ clean:
 run: $(BIN_SUDOKU)
 	./$(BIN_SUDOKU) input/temp.txt 25 4
 
-logic_tests: tests/logical_solver_tests.c $(OBJ)
+tests: tests/unit_tests.c $(OBJ)
 	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o tests/$(BIN_TEST) $^ $(LDFLAGS) -lcunit
 	./tests/$(BIN_TEST)	

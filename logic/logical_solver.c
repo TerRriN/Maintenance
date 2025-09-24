@@ -43,7 +43,7 @@ void set_possibilities(int N, int sqrt_N, char board[N][N], char possibilities[N
             if(board[i][j] == '0'){
                 for(int val = 1; val < (N+1); val++){
                     board[i][j] = val + '0';
-                    if(ValidateBoard(N, sqrt_N, board, i, j)){
+                    if(validate_board(N, sqrt_N, board, i, j)){
                         possibilities[i][j][val-1] = val + '0';
                     }else{
                         possibilities[i][j][val-1] = '0';
@@ -67,7 +67,7 @@ void update_possibilities(int N, int sqrt_N, char board[N][N], char poss[N][N][N
             if(board[i][j] == '0'){
                 for(int val = 1; val < (N+1); val++){
                     board[i][j] = val + '0';
-                    if(ValidateBoard(N, sqrt_N, board, i, j)){
+                    if(validate_board(N, sqrt_N, board, i, j)){
                         poss[i][j][val-1] = val + '0';
                     }else{
                         poss[i][j][val-1] = '0';
@@ -189,7 +189,7 @@ void pairs_helper(int N, char poss[N][N][N], int boxSize, int start_y, int start
     }
 }
 
-int pairs(int N, char poss[N][N][N]){
+int pairs(int N, int sqrt_N, char poss[N][N][N]){
     int count = 0;
     int boxSize = sqrt_N;
     pair_t **pairs = calloc(N, sizeof(pair_t*));
@@ -345,7 +345,7 @@ void eliminate_possibilities(int N, int sqrt_N, char board[N][N], char possibili
         lucky = the_lucky_one(N, sqrt_N, board, possibilities);    // If cell only has one possibility, set it
         easy = the_easy_one(N, sqrt_N, board, possibilities);      // If only one cell can set a value in a box, set it
         previous_pair = pair;
-        pair = pairs(N, possibilities);                    // If only two cells in a box can set the same two values, eliminate other possibilities in the cells
+        pair = pairs(N, sqrt_N, possibilities);                    // If only two cells in a box can set the same two values, eliminate other possibilities in the cells
         previous_line = line;
         line = lines(N, sqrt_N, possibilities);                    // If a line is formed by a value in a box, eliminate value in other cells in the line
     }

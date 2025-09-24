@@ -52,7 +52,7 @@ void sud_display_line(int line_length){
     printf("\n");
 }
 
-void sud_display_board_std(int N, char board[N][N]){
+void sud_display_board_std(int N, int sqrt_N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;
@@ -85,7 +85,7 @@ void sud_display_board_std(int N, char board[N][N]){
     sud_display_line(line_length);
 }
 
-void sud_display_board_giant(int N, char board[N][N]){
+void sud_display_board_giant(int N, int sqrt_N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;

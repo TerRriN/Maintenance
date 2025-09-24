@@ -94,7 +94,7 @@ int the_easy_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]);
  *     possibilities[4][5] = [ 6 7 ]
  *     possibilities[5][4] = [ 6 7 ]
 */
-int pairs(int N, char poss[N][N][N]);
+int pairs(int N, int sqrt_N, char poss[N][N][N]);
 
 /**
  * @brief Search for lines

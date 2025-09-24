@@ -63,11 +63,11 @@ void print_precise_possibilities(int N, char poss[N][N][N], int y, int x);
  * 
  * @param board Sudoku board
  */
-void sud_display_board_std(int N, char board[N][N]);
+void sud_display_board_std(int N, int sqrt_N, char board[N][N]);
 
 /**
  * @brief Display giant sudoku board in a more readable format
  * 
  * @param board Sudoku board
  */
-void sud_display_board_giant(int N, char board[N][N]);
+void sud_display_board_giant(int N, int sqrt_N, char board[N][N]);

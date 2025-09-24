@@ -30,18 +30,20 @@ void set_numbers_ss(int N, char board[N][N], char *file_name){
 void set_numbers_txt(int N, char board[N][N], char *file_name){
     FILE *file;
     file = fopen(file_name, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
     char c;
     int i = 0, j = 0;
     int val = 0;
 
     while((c = fgetc(file)) != EOF){
         if(c == ' '){
-            printf("%c ", val + '0');
             board[i][j] = val + '0';
             val = 0;
             j++;
         }else if(c == '\n'){
-            printf("\n");
             board[i][j] = val + '0';
             val = 0;
             i++;

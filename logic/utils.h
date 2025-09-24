@@ -8,7 +8,7 @@
  * @param y Row
  * @return True if there are duplicates, otherwise false
 */
-bool DuplicateNumbersinRow(int N, char board[N][N], int y, int x);
+bool duplicate_numbers_in_row(int N, char board[N][N], int y, int x);
 
 /**
  * @brief Check if there are duplicate numbers in a column
@@ -17,7 +17,7 @@ bool DuplicateNumbersinRow(int N, char board[N][N], int y, int x);
  * @param x Column
  * @return True if there are duplicates, otherwise false
 */
-bool DuplicateNumbersinCol(int N, char board[N][N], int y, int x);
+bool duplicate_numbers_in_col(int N, char board[N][N], int y, int x);
 
 /**
  * @brief Check if there are duplicate numbers in a box
@@ -27,7 +27,7 @@ bool DuplicateNumbersinCol(int N, char board[N][N], int y, int x);
  * @param x Column
  * @return True if there are duplicates, otherwise false
 */
-bool DuplicateNumbersinBox(int N, int sqrt_N, char board[N][N], int y, int x);
+bool duplicate_numbers_in_box(int N, int sqrt_N, char board[N][N], int y, int x);
 
 /**
  * @brief Validate board
@@ -37,7 +37,7 @@ bool DuplicateNumbersinBox(int N, int sqrt_N, char board[N][N], int y, int x);
  * @param x Column
  * @return True if board is valid, otherwise false
 */
-bool ValidateBoard(int N, int sqrt_N, char board[N][N], int y, int x);
+bool validate_board(int N, int sqrt_N, char board[N][N], int y, int x);
 
 /**
  * @brief Check if the entire board is valid

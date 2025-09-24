@@ -1,17 +1,21 @@
 #include "utils.h"
 
-bool DuplicateNumbersinRow(int N, char board[N][N], int y, int x){
+bool duplicate_numbers_in_row(int N, char board[N][N], int y, int x){
     char comparator = board[y][x];
+    if(comparator == '0') return false;
     for(int i = 0; i < N; i++){
         if(board[y][i] == comparator && i != x){
+            
             return true;
         }
     }
     return false;
 }
 
-bool DuplicateNumbersinCol(int N, char board[N][N], int y, int x){
+bool duplicate_numbers_in_col(int N, char board[N][N], int y, int x){
     char comparator = board[y][x];
+    if(comparator == '0') return false;
+
     for(int i = 0; i < N; i++){
         if(board[i][x] == comparator && i != y){
             return true;
@@ -20,11 +24,13 @@ bool DuplicateNumbersinCol(int N, char board[N][N], int y, int x){
     return false;
 }
 
-bool DuplicateNumbersinBox(int N, int sqrt_N, char board[N][N], int y, int x){
+bool duplicate_numbers_in_box(int N, int sqrt_N, char board[N][N], int y, int x){
     int boxSize = sqrt_N;
     int start_y = y - y % boxSize;
     int start_x = x - x % boxSize;
     char comparator = board[y][x];
+    if(comparator == '0') return false;
+
     int tmp = 0;
 
     for(int i = 0; i < boxSize; i++){
@@ -40,10 +46,10 @@ bool DuplicateNumbersinBox(int N, int sqrt_N, char board[N][N], int y, int x){
     return false;
 }
 
-bool ValidateBoard(int N, int sqrt_N, char board[N][N], int y, int x){
-    if(DuplicateNumbersinBox(N, sqrt_N, board, y, x))      return false; //BOX
-    if(DuplicateNumbersinCol(N, board, y, x))      return false; //COL
-    if(DuplicateNumbersinRow(N, board, y, x))      return false; //ROW
+bool validate_board(int N, int sqrt_N, char board[N][N], int y, int x){
+    if(duplicate_numbers_in_box(N, sqrt_N, board, y, x))      return false; //BOX
+    if(duplicate_numbers_in_col(N, board, y, x))      return false; //COL
+    if(duplicate_numbers_in_row(N, board, y, x))      return false; //ROW
     return true;
 }
 

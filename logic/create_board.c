@@ -137,7 +137,7 @@ bool Solve(int N, char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, 
             if(poss[y][x][i] == '0') continue;
 
             board[y][x] = (i+1) + '0'; // Set guess
-            if(ValidateBoard(board, y, x)){
+            if(validate_board(board, y, x)){
                 bool local_solution = false;
                 #pragma omp task firstprivate(board, N_unAssign) final(depth > 1)
                 {
