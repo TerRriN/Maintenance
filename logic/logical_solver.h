@@ -11,6 +11,7 @@
 /**
  * @brief Count unassigned cells
  * 
+ * @param N Size of the board (N x N)
  * @param board Sudoku board
  * @return Number of unassigned cells
 */
@@ -20,6 +21,7 @@ int count_unassigned(int N, char board[N][N]);
  * @brief Set unassigned cells
  * Sets the x and y coordinates of unassigned cells and puts them in an array
  *  
+ * @param N Size of the board (N x N)
  * @param board Sudoku board
  * @param N_unAssign Number of unassigned cells
  * @return Array of unassigned cells
@@ -39,6 +41,8 @@ void destroy_unassigned(unAssigned_t **unAssignInd, int N_unAssign);
  * @brief Set possibilities
  * Sets the possibilities for each cell in the board
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param board Sudoku board 
  * @param possibilities 3D array of possibilities for each cell
  * EX: possibilities[y][x] = [ 1 0 0 4 5 6 7 0 9 ]
@@ -51,6 +55,8 @@ void set_possibilities(int N, int sqrt_N, char board[N][N], char possibilities[N
  * If a cell is assigned, the possibilities array is set to NULL
  * If a cell is unassigned, the possibilities array is updated with possible values
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param board Sudoku board
  * @param poss Array of possibilities
 */
@@ -64,6 +70,8 @@ void update_possibilities(int N, int sqrt_N, char board[N][N], char poss[N][N][N
  * @brief The lucky one
  * If a cell only has one possibility, set it
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param board Sudoku board
  * @param poss Array of possibilities
  * @return Number of cells set
@@ -75,6 +83,8 @@ int the_lucky_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]);
  * @brief The easy one
  * If only one cell in a box can set a value, set it
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param board Sudoku board
  * @param poss Array of possibilities
  * @return Number of cells set
@@ -86,6 +96,8 @@ int the_easy_one(int N, int sqrt_N, char board[N][N], char poss[N][N][N]);
  * If only two cells in a box can set the same two values, 
  * eliminate other possibilities in the cells
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param poss Array of possibilities
  * @return Number of pairs found
  * EX: possibilities[4][5] = [ 1 4 5 6 7 9 ]
@@ -100,6 +112,8 @@ int pairs(int N, int sqrt_N, char poss[N][N][N]);
  * @brief Search for lines
  * If a line is formed by a value in a box, eliminate value in other cells in the line
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param poss Array of possibilities
  * @return Number of lines found
 */
@@ -108,6 +122,7 @@ int lines(int N, int sqrt_N, char poss[N][N][N]);
 /**
  * @brief Copy board
  * 
+ * @param N Size of the board (N x N)
  * @param OG_board Original board
  * @param current_board Current board
 */
@@ -116,6 +131,8 @@ void copy_board(int N, char OG_board[N][N], char current_board[N][N]);
 /**
  * @brief Eliminate possibilities
  * 
+ * @param N Size of the board (N x N)
+ * @param sqrt_N Square root of N
  * @param board Sudoku board
  * @param possibilities Array of possibilities
 */

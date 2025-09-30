@@ -53,7 +53,7 @@ clean:
 
 
 run: $(BIN_SUDOKU)
-	./$(BIN_SUDOKU) input/temp.txt 25 4
+	./$(BIN_SUDOKU) input/txt9/9x9board101.txt 9 4
 
 tests: tests/unit_tests.c $(OBJ)
 	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o tests/$(BIN_TEST) $^ $(LDFLAGS) -lcunit

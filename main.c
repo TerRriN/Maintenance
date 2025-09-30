@@ -23,6 +23,8 @@
 /**
  * @brief Brute force algorithm that tries to solve the sudoku board
  * 
+ * @param N Size of the board (NxN)
+ * @param sqrt_N Square root of N
  * @param board Sudoku board
  * @param unAssignInd Array of unassigned cells
  * @param N_unAssign Number of unassigned cells
@@ -39,7 +41,7 @@
  * and geeksforgeeks:
  * https://www.geeksforgeeks.org/sudoku-backtracking-7/
 */
-bool Solve(int N, char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *solutionFound, int depth, char poss[N][N][N]){
+bool Solve(int N, int sqrt_N, char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, bool *solutionFound, int depth, char poss[N][N][N]){
     if(N_unAssign == 0){
         return true;
     }
@@ -54,14 +56,14 @@ bool Solve(int N, char board[N][N], unAssigned_t **unAssignInd, int N_unAssign, 
             if(poss[y][x][i] == '0') continue;
 
             board[y][x] = (i+1) + '0'; // Set guess
-            if(validate_board(N, board, y, x)){
+            if(validate_board(N, sqrt_N, board, y, x)){
                 bool local_solution = false;
                 #pragma omp task firstprivate(board, N_unAssign) final(depth > 1)
                 {
                     char board_copy[N][N];
                     copy_board(N, board, board_copy);
                     board_copy[y][x] = (i+1) + '0';
-                    local_solution = Solve(N, board_copy, unAssignInd, tmp, solutionFound, depth+1, poss);
+                    local_solution = Solve(N, sqrt_N, board_copy, unAssignInd, tmp, solutionFound, depth+1, poss);
                     if(local_solution){
                         if(check_entire_board(N, board_copy)){
                             printf("SOLUTION\n");
@@ -94,7 +96,7 @@ int main(int argc, char *argv[]){
     }
     int N_threads = atoi(argv[3]);
     int N = atoi(argv[2]);
-    sqrt_N = sqrt(N);
+    int sqrt_N = sqrt(N);
     char board[N][N];
     set_numbers(N, board, argv[1]);                    // Set numbers from file
 
@@ -103,13 +105,17 @@ int main(int argc, char *argv[]){
     
     #if DEMO == 1
     printf("NOF Unassigned cells before elimination: %d\n", count_unassigned(N, board));
-    print_board(N, board);
+    if(N == 9){
+        display_board_standard(N, sqrt_N, board);
+    }else{
+        display_board_giant(N, sqrt_N, board);
+    }
     #endif
     bool solution = false;
     double start = get_wall_time();                     // Start timer
     char possibilities[N][N][N];
-    set_possibilities(N, board, possibilities);            // Set possibilities
-    eliminate_possibilities(N, board, possibilities);      // Eliminate possibilities and set logical values
+    set_possibilities(N, sqrt_N, board, possibilities);            // Set possibilities
+    eliminate_possibilities(N, sqrt_N, board, possibilities);      // Eliminate possibilities and set logical values
     int N_unAssign = count_unassigned(N, board);
 
     #if DEMO == 1
@@ -122,7 +128,11 @@ int main(int argc, char *argv[]){
             printf("NO SOLUTION\n");
         }
         #if DEMO == 1
-        print_board(N, board);
+        if(N == 9){
+            display_board_standard(N, sqrt_N, board);
+        }else{
+            display_board_giant(N, sqrt_N, board);
+        }
         #endif
     }else{
         unAssigned_t **unAssignInd = set_unassigned(N, board, N_unAssign); // Set unassigned cells (x, y)
@@ -131,7 +141,7 @@ int main(int argc, char *argv[]){
         {
             #pragma omp master
             {
-                Solve(N, board, unAssignInd, N_unAssign, &solution, 0, possibilities);
+                Solve(N, sqrt_N, board, unAssignInd, N_unAssign, &solution, 0, possibilities);
                 if(!solution){
                     printf("NO SOLUTION\n");
                 }

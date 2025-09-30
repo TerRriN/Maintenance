@@ -250,8 +250,8 @@ void create_board(int N, char original_board[N][N], int file_count){
 
 
 int main(){
-    N = 16;
-    sqrt_N = 4;
+    int N = 16;
+    int sqrt_N = 4;
     char original_board[N][N];
     //const char *board_str = "951782436834196275276543198748351629369427851512968743485219367127635984693874512";
     const char *board_str2 =  "9,11,13,5,12,10,16,1,14,15,2,4,6,8,7,3,"

@@ -45,24 +45,24 @@ void print_precise_possibilities(int N, char poss[N][N][N], int y, int x){
 }
 
 // Helper function to sud_display_board_std
-void sud_display_line(int line_length){
+void display_line(int line_length){
     for(int i = 0; i < line_length; i++){
         printf("-");
     }
     printf("\n");
 }
 
-void sud_display_board_std(int N, int sqrt_N, char board[N][N]){
+void display_board_standard(int N, int sqrt_N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;
     int line_length = (N*sqrt_N)+sqrt_N+1;
 
-    sud_display_line(line_length);
+    display_line(line_length);
     printf("|");
     for(int i = 0; i < N; i++){
         if(line == sqrt_N){
-            sud_display_line(line_length);
+            display_line(line_length);
             line = 0;
         }
         for(int j = 0; j < N; j++){
@@ -82,10 +82,10 @@ void sud_display_board_std(int N, int sqrt_N, char board[N][N]){
         printf("\n");
         line++;
     }
-    sud_display_line(line_length);
+    display_line(line_length);
 }
 
-void sud_display_board_giant(int N, int sqrt_N, char board[N][N]){
+void display_board_giant(int N, int sqrt_N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;
@@ -93,11 +93,11 @@ void sud_display_board_giant(int N, int sqrt_N, char board[N][N]){
 
     //One cell: 
 
-    sud_display_line(line_length);
+    display_line(line_length);
     printf("|");
     for(int i = 0; i < N; i++){
         if(line == sqrt_N){
-            sud_display_line(line_length);
+            display_line(line_length);
             line = 0;
         }
         for(int j = 0; j < N; j++){
@@ -119,5 +119,5 @@ void sud_display_board_giant(int N, int sqrt_N, char board[N][N]){
         printf("\n");
         line++;
     }
-    sud_display_line(line_length);
+    display_line(line_length);
 }
