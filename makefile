@@ -23,6 +23,7 @@ DEPS := $(OBJ:.o=.d)
 BIN_SUDOKU := sudoku
 BIN_CREATE := create_board
 BIN_TEST   := unit_tests
+BIN_DEMO   := demo
 
 .DEFAULT_GOAL := all
 .PHONY: all clean test
@@ -31,6 +32,10 @@ all: $(BIN_SUDOKU)
 
 # Main app (main.c at repo root)
 $(BIN_SUDOKU): main.c $(OBJ)
+	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o $@ $^ $(LDFLAGS)
+
+# Demo app
+$(BIN_DEMO): demo.c $(OBJ)
 	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o $@ $^ $(LDFLAGS)
 
 # Standalone board creator
@@ -51,9 +56,17 @@ $(OBJDIR):
 clean:
 	$(RM) -r $(OBJDIR) $(BIN_SUDOKU) $(BIN_CREATE) tests/$(BIN_TEST) testLogical
 
+runDemo9: $(BIN_DEMO)
+	./$(BIN_DEMO) input/temp.txt 9
+
+runDemo16: $(BIN_DEMO)
+	./$(BIN_DEMO) input/txt16/16x16board1.txt 16
+
+runDemo25: $(BIN_DEMO)
+	./$(BIN_DEMO) input/txt25/6x25.txt 25
 
 run: $(BIN_SUDOKU)
-	./$(BIN_SUDOKU) input/txt9/9x9board101.txt 9 4
+	./$(BIN_SUDOKU) input/txt25/6x25.txt 25 4
 
 tests: tests/unit_tests.c $(OBJ)
 	$(CC) $(CFLAGS) $(OFLAGS) $(INC) -o tests/$(BIN_TEST) $^ $(LDFLAGS) -lcunit

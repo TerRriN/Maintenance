@@ -69,7 +69,11 @@ bool Solve(int N, int sqrt_N, char board[N][N], unAssigned_t **unAssignInd, int 
                             printf("SOLUTION\n");
                         }
                         #if DEMO == 1
-                        print_board(N, board_copy);
+                        if(N == 9){
+                            display_board_standard(N, sqrt_N, board_copy);
+                        }else{
+                            display_board_giant(N, sqrt_N, board_copy);
+                        }
                         #endif
                         *solutionFound = true; // Workaround to stop all threads
                     }

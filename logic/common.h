@@ -79,3 +79,5 @@ void display_board_standard(int N, int sqrt_N, char board[N][N]);
  * @param board Sudoku board
  */
 void display_board_giant(int N, int sqrt_N, char board[N][N]);
+
+void display_board(int N, int sqrt_N, char board[N][N]);
