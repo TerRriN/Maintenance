@@ -9,30 +9,37 @@ To compile the solver:
 ```bash
 make
 ```
-To run performance tests on several puzzles:  
-The number of threads have to be manually set in the .sh files. Preset to 4. (Change the "N_threads" variable)  
-__Note:__ A lot of print statements can be turned on/off in the main.c file, by changing the "DEMO" variable on line 10.  
-9x9
-```bash
-make time9
+Run solver:
 ```
-16x16
-```bash
-make time16
+./sudoku <INPUT PATH> <BOARD SZIE> <N THREADS>
+EX: ./sudoku input/txt25/6x25.txt 25 4
 ```
-25x25
-```bash
-make time25
-```
+See makefile for more examples.
 
-To run the solver on a specific puzzle, see run commands in the makefile for examples.
+### Performance
+To run performance tests on an entire folder use the provided shellscript. Runs on 4 threads by default. 
+```
+scripts/./run-sudoku.sh <BOARD SIZE> <N THREADS (OPTIONAL)>
+EX: scripts/./run-sudoku.sh 9
+    or
+    scripts/./run-sudoku.sh 9 16
+```
+__Note:__ A lot of print statements can be turned on/off in the main.c file, by changing the "DEMO" variable (line 21) to 0.
+
+### Demo
+To see a live demonstration of the bruteforce algorithm:
+```
+make runDemo9
+```
+See makefile for more examples.
+__Note:__ the demo version is NOT threaded. If you get EARLY SOLUTION, remove eliminate_possibilities(). 
 
 ## Input
-Input files can be in the format of .txt or .ss. If you whish to use your own input data, see input files for examples. Make sure the puzzle is symetrical and the puzzle only has one solution. Easiest way to create a puzzle is to copy one from the web, write a translator that converts the puzzle to the correct format, and save it as a .txt file. The .ss format is used when generating puzzles on this very helpful site [website](https://kjell.haxx.se/sudoku/).
+Input files can be in the format of .txt. If you whish to use your own input data, see input files for examples. Make sure the puzzle is symetrical and the puzzle only has one solution. Easiest way to create a puzzle is to copy one from the web, write a translator that converts the puzzle to the correct format, and save it as a .txt file. The input reader is very fussy and cannot handle a single typo or missplaced space.
+
 Other sites which I used to generate puzzles:
-[website](http://www.sudoku-download.net/sudoku_64x64.php)
-[website](https://sudokugeant.cabanova.com/sudoku.html)
-[website](https://sudokugeant.cabanova.com/)
+[sudoku-download.net](http://www.sudoku-download.net/sudoku_64x64.php)
+[sudokugeant.cabanova.com](https://sudokugeant.cabanova.com/sudoku.html)
 
 ## Output
 The solver will output one of three statements:

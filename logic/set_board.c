@@ -29,6 +29,7 @@ void set_numbers_txt(int N, char board[N][N], char *file_name){
 }
 
 void set_numbers(int N, char board[N][N], char *file_name){
+    char *ext = strrchr(file_name, '.');
     if(strcmp(ext, ".txt") == 0){
         set_numbers_txt(N, board, file_name);
     }

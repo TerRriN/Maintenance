@@ -57,7 +57,7 @@ clean:
 	$(RM) -r $(OBJDIR) $(BIN_SUDOKU) $(BIN_CREATE) tests/$(BIN_TEST) $(BIN_DEMO) *.d tests/*.d
 
 runDemo9: $(BIN_DEMO)
-	./$(BIN_DEMO) input/temp.txt 9
+	./$(BIN_DEMO) input/txt9/9x9board1.txt 9
 
 runDemo16: $(BIN_DEMO)
 	./$(BIN_DEMO) input/txt16/16x16board1.txt 16
