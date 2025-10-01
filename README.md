@@ -35,7 +35,7 @@ See makefile for more examples.
 __Note:__ the demo version is NOT threaded. If you get EARLY SOLUTION, remove eliminate_possibilities(). 
 
 ## Input
-Input files can be in the format of .txt. If you whish to use your own input data, see input files for examples. Make sure the puzzle is symetrical and the puzzle only has one solution. Easiest way to create a puzzle is to copy one from the web, write a translator that converts the puzzle to the correct format, and save it as a .txt file. The input reader is very fussy and cannot handle a single typo or missplaced space.
+Input files can be in the format of .txt. If you whish to use your own input data, see input files for examples. Make sure the puzzle is symetrical and the puzzle only has one solution. Easiest way to create a puzzle is to copy one from the web, write a translator that converts the puzzle to the correct format, and save it as a .txt file. The input reader is very tricky and cannot handle a single typo or missplaced space.
 
 Other sites which I used to generate puzzles:
 [sudoku-download.net](http://www.sudoku-download.net/sudoku_64x64.php)
