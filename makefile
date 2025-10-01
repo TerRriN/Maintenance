@@ -54,7 +54,7 @@ $(OBJDIR):
 -include $(DEPS)
 
 clean:
-	$(RM) -r $(OBJDIR) $(BIN_SUDOKU) $(BIN_CREATE) tests/$(BIN_TEST) testLogical
+	$(RM) -r $(OBJDIR) $(BIN_SUDOKU) $(BIN_CREATE) tests/$(BIN_TEST) $(BIN_DEMO) *.d tests/*.d
 
 runDemo9: $(BIN_DEMO)
 	./$(BIN_DEMO) input/temp.txt 9
@@ -64,6 +64,9 @@ runDemo16: $(BIN_DEMO)
 
 runDemo25: $(BIN_DEMO)
 	./$(BIN_DEMO) input/txt25/6x25.txt 25
+
+runDemo36: $(BIN_DEMO)
+	./$(BIN_DEMO) input/36x36.txt 36
 
 run: $(BIN_SUDOKU)
 	./$(BIN_SUDOKU) input/txt25/6x25.txt 25 4

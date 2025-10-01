@@ -89,9 +89,7 @@ void display_board_giant(int N, int sqrt_N, char board[N][N]){
     int x = 0;
     int line = 0;
     int wall = 0;
-    int line_length = (4*sqrt_N)*sqrt_N+1+sqrt_N;
-
-    //One cell: 
+    int line_length = 4*N + sqrt_N + 1;
 
     display_line(line_length);
     printf("|");
@@ -129,14 +127,3 @@ void display_board(int N, int sqrt_N, char board[N][N]){
         display_board_giant(N, sqrt_N, board);
     }
 }
-
-/*
-| 6  9  3 | 8  7  4 | 5  1  2 |
--------------------------------
-
-| 11   3   4  16 | 15  13   5   7 | 10   2   6   9 |  1  12   8  14 |
----------------------------------------------------------------------
-
-| 18   9  25   1   2 | 11          13  22 |  4      21       5 |     23   7      20 | 15  12   3  14   8 |
-----------------------------------------------------------------------------------------------------------
-*/

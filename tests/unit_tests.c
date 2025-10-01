@@ -673,29 +673,29 @@ void test_copy_board(){
 void test_set_board_txt(){
     int N = 9;
     char board[9][9];
-    set_numbers(N, board, "/home/oskar/Programming/Maintenance/tests/test_input/9x9_empty.txt");
+    set_numbers(N, board, "tests/test_input/9x9_empty.txt");
     CU_ASSERT_EQUAL(0, memcmp(board, test_board_empty_9, sizeof(test_board_empty_9)));
-    set_numbers(N, board, "/home/oskar/Programming/Maintenance/tests/test_input/9x9_partial.txt");
+    set_numbers(N, board, "tests/test_input/9x9_partial.txt");
     CU_ASSERT_EQUAL(0, memcmp(board, test_board_partial_9, sizeof(test_board_partial_9)));
-    set_numbers(N, board, "/home/oskar/Programming/Maintenance/tests/test_input/9x9_full.txt");
+    set_numbers(N, board, "tests/test_input/9x9_full.txt");
     CU_ASSERT_EQUAL(0, memcmp(board, test_board_full_9, sizeof(test_board_full_9)));
 
     N = 16;
     char board16[16][16];
-    set_numbers(N, board16, "/home/oskar/Programming/Maintenance/tests/test_input/16x16_empty.txt");
+    set_numbers(N, board16, "tests/test_input/16x16_empty.txt");
     CU_ASSERT_EQUAL(0, memcmp(board16, test_board_empty_16, sizeof(test_board_empty_16)));
-    set_numbers(N, board16, "/home/oskar/Programming/Maintenance/tests/test_input/16x16_partial.txt");
+    set_numbers(N, board16, "tests/test_input/16x16_partial.txt");
     CU_ASSERT_EQUAL(0, memcmp(board16, test_board_partial_16, sizeof(test_board_partial_16)));
-    set_numbers(N, board16, "/home/oskar/Programming/Maintenance/tests/test_input/16x16_full.txt");
+    set_numbers(N, board16, "tests/test_input/16x16_full.txt");
     CU_ASSERT_EQUAL(0, memcmp(board16, test_board_full_16, sizeof(test_board_full_16)));
 
     N = 25;
     char board25[25][25];
-    set_numbers(N, board25, "/home/oskar/Programming/Maintenance/tests/test_input/25x25_empty.txt");
+    set_numbers(N, board25, "tests/test_input/25x25_empty.txt");
     CU_ASSERT_EQUAL(0, memcmp(board25, test_board_empty_25, sizeof(test_board_empty_25)));
-    set_numbers(N, board25, "/home/oskar/Programming/Maintenance/tests/test_input/25x25_partial.txt");
+    set_numbers(N, board25, "tests/test_input/25x25_partial.txt");
     CU_ASSERT_EQUAL(0, memcmp(board25, test_board_partial_25, sizeof(test_board_partial_25)));
-    set_numbers(N, board25, "/home/oskar/Programming/Maintenance/tests/test_input/25x25_full.txt");
+    set_numbers(N, board25, "tests/test_input/25x25_full.txt");
     CU_ASSERT_EQUAL(0, memcmp(board25, test_board_full_25, sizeof(test_board_full_25)));
 }
 

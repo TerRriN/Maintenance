@@ -9,27 +9,6 @@
 #include "logical_solver.h"
 #include "set_board.h"
 
-/*bool Solve(board_t *board, int N_unAssign){
-    if(N_unAssign == 0){
-        return true;
-    }
-
-    int x = board->unAssignInd[N_unAssign-1]->x;
-    int y = board->unAssignInd[N_unAssign-1]->y;
-
-    for(int val = 1; val < (board->N+1); val++){
-        board->matrix[y][x] = val; // Set guess
-        if(ValidateBoard(board, y, x)){
-            bool solution;
-            solution = Solve(board, N_unAssign - 1);
-            if(solution){
-                return true;
-            }
-        }
-    }
-    board->matrix[y][x] = 0; // No solution, reset value in backtracking
-    return false;
-}*/
 #define DEMO 1
 
 void clear_screen(){

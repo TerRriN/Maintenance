@@ -1,32 +1,5 @@
 #include "set_board.h"
 
-void set_numbers_ss(int N, char board[N][N], char *file_name){
-    FILE *file;
-    file = fopen(file_name, "r");
-    char c = ' ';
-    int i = 0, j = 0;
-    char prev = ' ';
-
-    while(c != EOF){
-        c = fgetc(file);
-        if(c == '\n' && prev == '-'){
-            j = 0;
-        }else if(c == '\n'){
-            i++;
-            j = 0;
-        }else if(c == '.'){
-            board[i][j] = '0';
-            j++;
-        }else if(c >= '1' && c <= '9'){
-            board[i][j] = c;
-            j++;
-        }
-        prev = c;
-    }
-    fclose(file);
-}
-
-
 void set_numbers_txt(int N, char board[N][N], char *file_name){
     FILE *file;
     file = fopen(file_name, "r");
@@ -56,10 +29,7 @@ void set_numbers_txt(int N, char board[N][N], char *file_name){
 }
 
 void set_numbers(int N, char board[N][N], char *file_name){
-    char *ext = strrchr(file_name, '.');
-    if(strcmp(ext, ".ss") == 0){
-        set_numbers_ss(N, board, file_name);
-    }else if(strcmp(ext, ".txt") == 0){
+    if(strcmp(ext, ".txt") == 0){
         set_numbers_txt(N, board, file_name);
     }
 }

@@ -69,11 +69,7 @@ bool Solve(int N, int sqrt_N, char board[N][N], unAssigned_t **unAssignInd, int 
                             printf("SOLUTION\n");
                         }
                         #if DEMO == 1
-                        if(N == 9){
-                            display_board_standard(N, sqrt_N, board_copy);
-                        }else{
-                            display_board_giant(N, sqrt_N, board_copy);
-                        }
+                        display_board(N, sqrt_N, board_copy);
                         #endif
                         *solutionFound = true; // Workaround to stop all threads
                     }
@@ -109,11 +105,7 @@ int main(int argc, char *argv[]){
     
     #if DEMO == 1
     printf("NOF Unassigned cells before elimination: %d\n", count_unassigned(N, board));
-    if(N == 9){
-        display_board_standard(N, sqrt_N, board);
-    }else{
-        display_board_giant(N, sqrt_N, board);
-    }
+    display_board(N, sqrt_N, board);
     #endif
     bool solution = false;
     double start = get_wall_time();                     // Start timer
@@ -132,11 +124,7 @@ int main(int argc, char *argv[]){
             printf("NO SOLUTION\n");
         }
         #if DEMO == 1
-        if(N == 9){
-            display_board_standard(N, sqrt_N, board);
-        }else{
-            display_board_giant(N, sqrt_N, board);
-        }
+        display_board(N, sqrt_N, board);
         #endif
     }else{
         unAssigned_t **unAssignInd = set_unassigned(N, board, N_unAssign); // Set unassigned cells (x, y)
